@@ -46,7 +46,7 @@ void InputInterruptsInit()
     TCCR1B |= (1 << WGM12);     // Set for CTC mode.  OCR1A = modulus
     TIMSK1 |= (1 << OCIE1A);    // Enable CTC interrupt
     sei();                      // Enable global interrupts
-    OCR1A = 100;              // Set the counter modulus
+    OCR1A = 50;              // Set the counter modulus
     TCCR1B |= (1 << CS12);      // Set prescaler for divide by 256,
 }
 

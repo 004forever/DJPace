@@ -42,6 +42,7 @@ int isWhite(int x, int y, int screen)
             return 1;
         return 0;
     }
+    //play
     if(screen == 1)
     {
         //disc
@@ -57,6 +58,7 @@ int isWhite(int x, int y, int screen)
             return 1;
         return 0;
     }
+    //pause
     if(screen == 2)
     {
         //disc
@@ -132,6 +134,7 @@ void spi_init_master(void)
     
     SPCR &= ~(1<<SPR0);
     SPCR &= ~(1<<SPR1);
+    SPSR |= (1<<SPI2X);
     SPCR &= ~(1 << DORD); // Sends MSB first
     
     SPCR |= (1 << SPE);// Enable SPI
