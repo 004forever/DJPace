@@ -4,6 +4,7 @@
 #include "LCD.h"
 #include "Sound.h"
 #include "Serial.h"
+#include "I2C.h"
 
 #define FOSC 9830400		// Clock frequency
 #define BAUD 9600              // Baud rate used by the LCD
@@ -13,31 +14,39 @@
 
 int main(void)
 {
-    _delay_ms(4000);
-    spi_init_master();
-    init_lcdd();
-    
-    while(1)
-    {
-    display_bitmap(0);
-    _delay_ms(5000);
-    display_bitmap(1);
-    _delay_ms(5000);
-    display_bitmap(2);
-    _delay_ms(5000);
-    }
-    
-    /*init_audio();
 
-    send_audio_data(0x0001);
-    send_audio_data(0xfffe);
-    _delay_ms(5000);
-    send_audio_data(0x0002);
-    send_audio_data(0xfffe);*/
     
-    while(1);
+    // if touch interrupt is high, get the status and value of x,y coordinates
     
-    return 0;
+    /*while(1)
+    {
+    status=i2c_io(testAddress, &abuf, 1, &threshold, 1, NULL, 0);
+    if(status != 0x20)
+    {
+            sci_num(testAddress);
+        sci_num(status);
+    }
+        testAddress++;
+    }*/
+    
+    /*sci_init();
+    init_audio();
+
+    uint16_t file = 0;
+    while(file < 0x08)
+    {
+        sci_num(file);
+        init_audio();
+    send_audio_data(file);
+        _delay_ms(100);
+    send_audio_data(PLAY_PAUSE);
+    _delay_ms(10000);
+        file++;
+    }*/
+    
+    //while(1);
+    
+    //return 0;
     
     //return 0;
     //spi_init_master();
@@ -52,8 +61,10 @@ int main(void)
         //display_bitmap();
         //color_bars();
     //}
-    //InputInterruptsInit();
-    //while(1);
+    _delay_ms(4000);
+    InputInterruptsInit();
+    while(1);
+    return 0;
 }
 
 

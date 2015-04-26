@@ -10,13 +10,8 @@
 #include <util/delay.h>
 
 
-#define SEND          0x80
-#define PLAY_PAUSE    0x01
-#define STOP          0x02
-#define NEXT          0x04
-#define VOLUME_UP     0x08
-#define VOLUME_DOWN   0x08
-#define ADDRESS       0x10
+#define PLAY_PAUSE    0xfffe
+#define STOP          0xffff
 
 
 void init_audio(void);

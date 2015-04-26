@@ -10,6 +10,9 @@
 #include <avr/interrupt.h>
 #include "HeartMonitor.h"
 #include "Serial.h"
+#include "Accelerometer.h"
+#include "I2C.h"
+#include "LCD.h"
 
 #define FOSC 9830400		// Clock frequency
 #define BAUD 9600              // Baud rate used by the LCD

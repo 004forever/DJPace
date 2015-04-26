@@ -20,7 +20,7 @@
 DEVICE     = atmega328p
 CLOCK      = 9830400
 PROGRAMMER = -c avrispmkii -P usb
-OBJECTS    = main.o Serial.o HeartMonitor.o InputInterrupts.o LCD.o Sound.o
+OBJECTS    = main.o Serial.o HeartMonitor.o InputInterrupts.o LCD.o Sound.o I2C.o Accelerometer.o
 FUSES      = -U hfuse:w:0xdf:m -U lfuse:w:0xe0:m
 
 # ATMega8 fuse bits used above (fuse bits for other devices are different!):
