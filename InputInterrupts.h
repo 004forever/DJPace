@@ -13,6 +13,7 @@
 #include "Accelerometer.h"
 #include "I2C.h"
 #include "LCD.h"
+#include "Sound.h"
 
 #define FOSC 9830400		// Clock frequency
 #define BAUD 9600              // Baud rate used by the LCD

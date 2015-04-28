@@ -43,7 +43,7 @@ int isWhite(int x, int y, int screen)
         return 0;
     }
     //play
-    if(screen == 1)
+    else if(screen == 1)
     {
         //disc
         if(x*x+y*y >10000 && x*x+y*y < 12000)
@@ -59,7 +59,7 @@ int isWhite(int x, int y, int screen)
         return 0;
     }
     //pause
-    if(screen == 2)
+    else if(screen == 2)
     {
         //disc
         if(x*x+y*y >10000 && x*x+y*y < 12000)
@@ -74,6 +74,53 @@ int isWhite(int x, int y, int screen)
             return 1;
         if(x < -120 && x/2+170 >y && y > -x/2+20)
             return 1;
+        return 0;
+    }
+    else
+    {
+        int value = screen;
+        int digits[3];
+        int i;
+        digits[2] = value % 10;
+        digits[1] = (value/10)%10;
+        digits[0] = value/100;
+        for(i = -1;i < 2;i++)
+        {
+            //middle
+            if(x > -40+i*320/3 && x < 40+i*320/3 && y > -5 && y < 5
+               && (digits[i+1] == 2 || digits[i+1] == 3 || digits[i+1] == 4 || digits[i+1] == 5 || digits[i+1] == 6
+                   ||digits[i+1] == 8 || digits[i+1] == 9))
+                return 1;
+            //bottom
+            if(x > -40+i*320/3 && x < 40+i*320/3 && y > -240/3-5 && y < -240/3+5
+               && (digits[i+1] == 0 || digits[i+1] == 2 || digits[i+1] == 3 || digits[i+1] == 5 || digits[i+1] == 6
+                   ||digits[i+1] == 8 || digits[i+1] == 9))
+                return 1;
+            //top
+            if(x > -40+i*320/3 && x < 40+i*320/3 && y > 240/3-5 && y < 240/3+5
+               && (digits[i+1] == 0 || digits[i+1] == 2 || digits[i+1] == 3 || digits[i+1] == 5 || digits[i+1] == 6
+                   ||digits[i+1] == 7 || digits[i+1] == 8 || digits[i+1] == 9))
+                return 1;
+            //top left
+            if(x > -40+i*320/3 && x < -30+i*320/3 && y > 4 && y < 240/3-4
+               && (digits[i+1] == 0 || digits[i+1] == 4 || digits[i+1] == 5 || digits[i+1] == 6
+                   ||digits[i+1] == 8 || digits[i+1] == 9))
+                return 1;
+            //top right
+            if(x > 30+i*320/3 && x < 40+i*320/3 && y > 4 && y < 240/3-4
+               && (digits[i+1] == 0 || digits[i+1] == 1 || digits[i+1] == 2 || digits[i+1] == 3 || digits[i+1] == 4
+                   ||digits[i+1] == 7 || digits[i+1] == 8 || digits[i+1] == 9))
+                return 1;
+            //bottom left
+            if(x > -40+i*320/3 && x < -30+i*320/3 && y > -240/3-4 && y < -4
+               && (digits[i+1] == 0 || digits[i+1] == 2 || digits[i+1] == 6 || digits[i+1] == 8))
+                return 1;
+            //bottom right
+            if(x > 30+i*320/3 && x < 40+i*320/3 && y > -240/3-4 && y < -4
+               && (digits[i+1] == 0 || digits[i+1] == 1 || digits[i+1] == 3 || digits[i+1] == 4 || digits[i+1] == 5
+                   ||digits[i+1] == 6 || digits[i+1] == 7 || digits[i+1] == 8 || digits[i+1] == 9))
+                return 1;
+        }
         return 0;
     }
     return 0;
