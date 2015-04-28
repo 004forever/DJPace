@@ -15,6 +15,9 @@ int high;
 int count;
 int first;
 
+int beat[10];
+int beatIndex;
+
 uint8_t currentSong;
 
 int currentScreen;
@@ -28,6 +31,8 @@ void InputInterruptsInit()
 
     init_audio();
     _delay_ms(10);
+    
+    beatIndex = 0;
     
     moveToMenu();
     
@@ -78,25 +83,72 @@ void moveToPlay()
 
 void moveToMenu()
 {
+    send_audio_data(STOP);
     currentScreen = 0;
     display_bitmap(currentScreen);
-    currentSong++;
-    if(currentSong > 0x0A)
-    {
-        currentSong = 0x08;
-    }
 }
 
 void calculateHeart()
 {
-        uint16_t x, y;
+    uint16_t x, y;
+    int calc;
+    int i;
     if(HeartMonitorReadValue())
     {
         if(!high)
         {
+            calc = 384*60/count;
+            beat[beatIndex] = calc;
+            beatIndex++;
+            if(beatIndex > 9)
+                beatIndex = 0;
+            calc = 0;
+            for(i = 0;i < 10;i++)
+            {
+                calc += beat[i];
+            }
+            calc/=10;
+            //display_bitmap(calc);
+            sci_num(calc);
+            /*if(calc < 80 && currentSong != 0x08)
+            {
+                sci_num(0x08);
+                currentSong = 0x08;
+                if(currentScreen == 2)
+                {
+                    init_audio();
+                    send_audio_data(currentSong);
+                    _delay_ms(100);
+                    send_audio_data(PLAY_PAUSE);
+                }
+            }
+            if(calc >= 80 && calc < 120 && currentSong != 0x09)
+            {
+                sci_num(0x08);
+                currentSong = 0x09;
+                if(currentScreen == 2)
+                {
+                    init_audio();
+                    send_audio_data(currentSong);
+                    _delay_ms(100);
+                    send_audio_data(PLAY_PAUSE);
+                }
+            }
+            if(calc >= 120 && currentSong != 0x0A)
+            {
+                sci_num(0x08);
+                currentSong = 0x0A;
+                if(currentScreen == 2)
+                {
+                    init_audio();
+                    send_audio_data(currentSong);
+                    _delay_ms(100);
+                    send_audio_data(PLAY_PAUSE);
+                }
+            }*/
+            //sci_num(calc);
             high = 1;
             count = 0;
-            //sci_num(0x11);
         }
         else
             count++;
@@ -104,14 +156,15 @@ void calculateHeart()
     else
     {
         high = 0;
+        count++;
     }
 
     if(!(PINC &(1<<PC3)))
     {
         getPoint(&x,&y);    //get the x and y point when screen is pressed
-        sci_num(0xFF);
-        sci_num(x);
-        sci_num(y);
+        //sci_num(0xFF);
+        //sci_num(x);
+        //sci_num(y);
         switch (currentScreen) {
             case 0:   //main screen, choosing between h and p
             {
