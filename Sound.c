@@ -19,7 +19,14 @@ void init_audio()
     PORTD |= 1 << PD7;         // Set data output to high
     PORTD |= 1 << PD6;         // Set reset output to high
     
-    PORTB &= ~(1<< PD6);
+    PORTD &= ~(1<< PD6);
+    _delay_ms(5);
+    PORTD |= 1 << PD6;
+}
+
+void audio_reset()
+{
+    PORTD &= ~(1<< PD6);
     _delay_ms(5);
     PORTD |= 1 << PD6;
 }

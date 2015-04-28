@@ -1,11 +1,3 @@
-//
-//  InputInterrupts.c
-//  final
-//
-//  Created by Sam Vercauteren on 4/19/15.
-//
-//
-
 #include "InputInterrupts.h"
 
 int times[10];
@@ -28,7 +20,7 @@ void InputInterruptsInit()
     init_lcdd();
     currentScreen = 0;
     currentSong = 0x08;
-
+    
     init_audio();
     _delay_ms(10);
     
@@ -54,7 +46,7 @@ void InputInterruptsInit()
     i2c_init(BDIV);
     // Set threshold of touch sensitivity of touch panel
     status=i2c_io(ADDR_TOUCH, &abuf, 1, &threshold, 1, NULL, 0);
-
+    
     
     //set up interrupts
     TCCR1B |= (1 << WGM12);     // Set for CTC mode.  OCR1A = modulus
@@ -66,10 +58,8 @@ void InputInterruptsInit()
 
 void moveToPause()
 {
-    init_audio();
-    _delay_ms(10);
     send_audio_data(currentSong);
-        send_audio_data(PLAY_PAUSE);
+    send_audio_data(PLAY_PAUSE);
     currentScreen = 2;
     display_bitmap(currentScreen);
 }
@@ -109,40 +99,47 @@ void calculateHeart()
             }
             calc/=10;
             //display_bitmap(calc);
-            sci_num(calc);
+            sci_num(currentSong);
+            sci_num(currentScreen);
             if(calc < 80 && currentSong != 0x08)
             {
-                sci_num(0x08);
+                //sci_num(0x08);
                 currentSong = 0x08;
                 if(currentScreen == 2)
                 {
-                    init_audio();
+                    //sci_num(0xFF);
+                    //send_audio_data(STOP);
+                    //audio_reset();
                     send_audio_data(currentSong);
-                    _delay_ms(100);
+                    //_delay_ms(100);
                     send_audio_data(PLAY_PAUSE);
                 }
             }
             if(calc >= 80 && calc < 120 && currentSong != 0x09)
             {
-                sci_num(0x08);
+                //sci_num(0x08);
                 currentSong = 0x09;
                 if(currentScreen == 2)
                 {
-                    init_audio();
+                    //sci_num(0xFF);
+                    //send_audio_data(STOP);
+                    //audio_reset();
                     send_audio_data(currentSong);
-                    _delay_ms(100);
+                    //_delay_ms(100);
                     send_audio_data(PLAY_PAUSE);
                 }
             }
             if(calc >= 120 && currentSong != 0x0A)
             {
-                sci_num(0x08);
+                //sci_num(0x08);
                 currentSong = 0x0A;
                 if(currentScreen == 2)
                 {
-                    init_audio();
+                    //sci_num(0xFF);
+                    //send_audio_data(STOP);
+                    //audio_reset();
                     send_audio_data(currentSong);
-                    _delay_ms(100);
+                    //_delay_ms(100);
                     send_audio_data(PLAY_PAUSE);
                 }
             }
@@ -158,7 +155,7 @@ void calculateHeart()
         high = 0;
         count++;
     }
-
+    
     if(!(PINC &(1<<PC3)))
     {
         getPoint(&x,&y);    //get the x and y point when screen is pressed
@@ -191,7 +188,7 @@ void calculateHeart()
             }
             case 2:                   // music pause screen
             {
-
+                
                 if ((x>0x0037) & (x<0x00A3) & (y>0x003D) & (y<0x00DF)) {                 // play button pressed
                     moveToPlay();
                 }

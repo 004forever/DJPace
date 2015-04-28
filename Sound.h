@@ -15,5 +15,5 @@
 
 
 void init_audio(void);
-
+void audio_reset(void);
 void send_audio_data(uint16_t);
