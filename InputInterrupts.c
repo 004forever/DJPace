@@ -60,7 +60,7 @@ void InputInterruptsInit()
     TCCR1B |= (1 << WGM12);     // Set for CTC mode.  OCR1A = modulus
     TIMSK1 |= (1 << OCIE1A);    // Enable CTC interrupt
     sei();                      // Enable global interrupts
-    OCR1A = 100;              // Set the counter modulus
+    OCR1A = 200;              // Set the counter modulus
     TCCR1B |= (1 << CS12);      // Set prescaler for divide by 256,
 }
 
@@ -97,7 +97,7 @@ void calculateHeart()
     {
         if(!high)
         {
-            calc = 384*60/count;
+            calc = 192*60/count;
             beat[beatIndex] = calc;
             beatIndex++;
             if(beatIndex > 9)
@@ -110,7 +110,7 @@ void calculateHeart()
             calc/=10;
             //display_bitmap(calc);
             sci_num(calc);
-            /*if(calc < 80 && currentSong != 0x08)
+            if(calc < 80 && currentSong != 0x08)
             {
                 sci_num(0x08);
                 currentSong = 0x08;
@@ -145,7 +145,7 @@ void calculateHeart()
                     _delay_ms(100);
                     send_audio_data(PLAY_PAUSE);
                 }
-            }*/
+            }
             //sci_num(calc);
             high = 1;
             count = 0;
@@ -162,9 +162,9 @@ void calculateHeart()
     if(!(PINC &(1<<PC3)))
     {
         getPoint(&x,&y);    //get the x and y point when screen is pressed
-        //sci_num(0xFF);
-        //sci_num(x);
-        //sci_num(y);
+        sci_num(0xFF);
+        sci_num(x);
+        sci_num(y);
         switch (currentScreen) {
             case 0:   //main screen, choosing between h and p
             {

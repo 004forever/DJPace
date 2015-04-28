@@ -13,11 +13,12 @@ int HeartMonitorReadValue()
     uint8_t x;
     ADMUX |= (0<<MUX0);//3
     ADMUX &= (0xf0 | (0<<MUX0));//3
-    sci_init();
+    //sci_init();
     ADCSRA |= (1 << ADSC);
     while (ADCSRA & (1 << ADSC));
     x = ADCH;
-    sci_num(x);
+    //_delay_ms(100);
+    //sci_num(x);
     if(x == 0xFF)
     {
         return 0;
